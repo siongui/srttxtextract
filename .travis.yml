@@ -3,6 +3,6 @@ language: go
 go:
   - 1.12.17
 install:
-  - echo "TODO: install GopherJS"
+  - go get -u github.com/gopherjs/gopherjs
 script:
   - go test -v
