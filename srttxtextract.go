@@ -70,7 +70,7 @@ func NextState(state LineType, line string) LineType {
 	return state
 }
 
-func ReadSrtFile(filePath string) (err error) {
+func ReadSrtFileTexts(filePath string) (texts string, err error) {
 	fmt.Println(filePath)
 	lines, err := FileToLines(filePath)
 	if err != nil {
@@ -78,12 +78,11 @@ func ReadSrtFile(filePath string) (err error) {
 	}
 
 	state := StartLine
-	//textlines := []string{}
 	for _, line := range lines {
 		//fmt.Println("current state:", state)
 		state = NextState(state, line)
 		if state == TextLine {
-			fmt.Println(line)
+			texts = texts + line + "\n"
 		}
 	}
 
@@ -97,10 +96,11 @@ func ReadSrtDir(dir string) (err error) {
 	}
 
 	for _, file := range files {
-		err = ReadSrtFile(path.Join(dir, file.Name()))
+		texts, err := ReadSrtFileTexts(path.Join(dir, file.Name()))
 		if err != nil {
-			return
+			return err
 		}
+		fmt.Println(texts)
 	}
 	return
 }
