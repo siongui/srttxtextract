@@ -16,7 +16,11 @@ TESTDATA_DIR=testdata/
 
 devserver: fmt
 	@echo "\033[92mDevelopment Server Running ...\033[0m"
-	@go test -v
+	@gopherjs build gopherjs/*.go -m -o gopherjs/app.js
+	@go run devserver/devserver.go
+
+test:
+	go test -v
 
 fmt:
 	@echo "\033[92mGo fmt source code...\033[0m"

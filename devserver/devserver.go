@@ -8,8 +8,8 @@ import (
 	"path"
 )
 
-func SendRootIndex(w io.Writer) {
-	f, err := os.Open("website/index.html")
+func SendFile(w io.Writer, filePath string) {
+	f, err := os.Open(filePath)
 	if err != nil {
 		fmt.Fprintf(w, err.Error())
 		return
@@ -25,7 +25,7 @@ func SendRootIndex(w io.Writer) {
 
 func NotFound(w http.ResponseWriter, r *http.Request) {
 	//fmt.Fprintf(w, "my 404 page!")
-	SendRootIndex(w)
+	SendFile(w, "path/to/404/file")
 }
 
 func FileServerWithCustom404(fs http.FileSystem) http.Handler {
@@ -41,5 +41,5 @@ func FileServerWithCustom404(fs http.FileSystem) http.Handler {
 }
 
 func main() {
-	http.ListenAndServe(":8000", FileServerWithCustom404(http.Dir("website")))
+	http.ListenAndServe(":8000", FileServerWithCustom404(http.Dir("gopherjs")))
 }
