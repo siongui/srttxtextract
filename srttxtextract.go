@@ -33,8 +33,17 @@ func FileToLines(filePath string) (lines []string, err error) {
 	return
 }
 
-func PrintLines(filePath string) (err error) {
+func ReadSrtFiles(filePath string) (err error) {
 	fmt.Println(filePath)
+	lines, err := FileToLines(filePath)
+	if err != nil {
+		return
+	}
+
+	for _, line := range lines {
+		fmt.Println(line)
+	}
+
 	return
 }
 
@@ -45,7 +54,7 @@ func ReadSrtDir(dir string) (err error) {
 	}
 
 	for _, file := range files {
-		err = PrintLines(path.Join(dir, file.Name()))
+		err = ReadSrtFiles(path.Join(dir, file.Name()))
 		if err != nil {
 			return
 		}
