@@ -37,11 +37,37 @@ func FileToLines(filePath string) (lines []string, err error) {
 
 func IsIndexLine(line string) bool {
 	matched, _ := regexp.MatchString(`[0-9]+`, line)
+	/*
+		if matched {
+			fmt.Println(line)
+		}
+	*/
 	return matched
 }
 
 func IsEmptyLine(line string) bool {
 	return strings.TrimSpace(line) == ""
+}
+
+// state machine:
+// Start -> Index -> Time -> Text -> Empty -> Index -> ...
+func NextState(state LineType, line string) LineType {
+	if state == StartLine && IsIndexLine(line) {
+		return IndexLine
+	}
+	if state == EmptyLine && IsIndexLine(line) {
+		return IndexLine
+	}
+	if state == IndexLine {
+		return TimeLine
+	}
+	if state == TimeLine {
+		return TextLine
+	}
+	if state == TextLine && IsEmptyLine(line) {
+		return EmptyLine
+	}
+	return state
 }
 
 func ReadSrtFile(filePath string) (err error) {
@@ -52,12 +78,12 @@ func ReadSrtFile(filePath string) (err error) {
 	}
 
 	state := StartLine
+	//textlines := []string{}
 	for _, line := range lines {
-		if state == StartLine && IsIndexLine(line) {
-			state = IndexLine
-		}
-		if state == EmptyLine && IsIndexLine(line) {
-			state = IndexLine
+		//fmt.Println("current state:", state)
+		state = NextState(state, line)
+		if state == TextLine {
+			fmt.Println(line)
 		}
 	}
 
