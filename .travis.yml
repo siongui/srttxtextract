@@ -6,3 +6,11 @@ install:
   - make install
 script:
   - go test -v
+  - make js
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: gopherjs
+  on:
+    branch: master
