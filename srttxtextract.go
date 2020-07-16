@@ -20,6 +20,15 @@ const (
 	EmptyLine
 )
 
+func StringToLines(s string) (lines []string, err error) {
+	scanner := bufio.NewScanner(strings.NewReader(s))
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	err = scanner.Err()
+	return
+}
+
 func FileToLines(filePath string) (lines []string, err error) {
 	f, err := os.Open(filePath)
 	if err != nil {
@@ -70,13 +79,7 @@ func NextState(state LineType, line string) LineType {
 	return state
 }
 
-func ReadSrtFileTexts(filePath string) (texts string, err error) {
-	fmt.Println(filePath)
-	lines, err := FileToLines(filePath)
-	if err != nil {
-		return
-	}
-
+func SrtFileLinesToTexts(lines []string) (texts string) {
 	state := StartLine
 	for _, line := range lines {
 		//fmt.Println("current state:", state)
@@ -85,8 +88,16 @@ func ReadSrtFileTexts(filePath string) (texts string, err error) {
 			texts = texts + line + "\n"
 		}
 	}
-
 	return
+}
+
+func ReadSrtFileTexts(filePath string) (texts string, err error) {
+	fmt.Println(filePath)
+	lines, err := FileToLines(filePath)
+	if err != nil {
+		return
+	}
+	return SrtFileLinesToTexts(lines), err
 }
 
 func ReadSrtDir(dir string) (err error) {
