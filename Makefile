@@ -14,10 +14,13 @@ endif
 TESTDATA_DIR=testdata/
 
 
-devserver: fmt
+devserver: fmt js
 	@echo "\033[92mDevelopment Server Running ...\033[0m"
-	@gopherjs build gopherjs/*.go -m -o gopherjs/app.js
 	@go run devserver/devserver.go
+
+js:
+	@echo "\033[92mGenerating JavaScript ...\033[0m"
+	@gopherjs build gopherjs/*.go -m -o gopherjs/app.js
 
 test:
 	go test -v
@@ -36,3 +39,7 @@ download_go:
 	@wget https://golang.org/dl/go$(GO_VERSION).linux-amd64.tar.gz
 	@tar -xvzf go$(GO_VERSION).linux-amd64.tar.gz
 	@rm go$(GO_VERSION).linux-amd64.tar.gz
+
+install:
+	go get -u github.com/gopherjs/gopherjs
+	go get -u github.com/siongui/srttxtextract
