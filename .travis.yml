@@ -1,0 +1,8 @@
+dist: bionic
+language: go
+go:
+  - 1.12.17
+install:
+  - echo "TODO: install GopherJS"
+script:
+  - go test -v
