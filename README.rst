@@ -1,6 +1,6 @@
-=======================================
-`Pāli Dictionary`_ and `Pāli Tipiṭaka`_
-=======================================
+==========================
+Extract Texts in .srt File
+==========================
 
 .. image:: https://img.shields.io/badge/Language-Go-blue.svg
    :target: https://golang.org/
