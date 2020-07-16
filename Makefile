@@ -28,6 +28,7 @@ test:
 fmt:
 	@echo "\033[92mGo fmt source code...\033[0m"
 	@go fmt *.go
+	@go fmt gopherjs/*.go
 
 update_ubuntu:
 	@echo "\033[92mUpdating Ubuntu ...\033[0m"
