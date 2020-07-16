@@ -43,4 +43,5 @@ download_go:
 
 install:
 	go get -u github.com/gopherjs/gopherjs
+	go get -u github.com/siongui/godom
 	go get -u github.com/siongui/srttxtextract
